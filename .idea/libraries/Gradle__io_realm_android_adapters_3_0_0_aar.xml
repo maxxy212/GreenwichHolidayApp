@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: io.realm:android-adapters:3.0.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5c64b42a5176ebfc596a6e04f11da4d2/jetified-android-adapters-3.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a237654df4f6d8f984f5b9c09da6cef/jetified-android-adapters-3.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a237654df4f6d8f984f5b9c09da6cef/jetified-android-adapters-3.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4a237654df4f6d8f984f5b9c09da6cef/jetified-android-adapters-3.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.realm/android-adapters/3.0.0/6b4af7efc0a9613b411e68b05e4fab1a9212631d/android-adapters-3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.realm/android-adapters/3.0.0/b9c80d794457c8e257fbd99e6f22e3f8adbe85d5/android-adapters-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

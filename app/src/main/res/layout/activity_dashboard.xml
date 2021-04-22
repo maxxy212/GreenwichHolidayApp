@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="user" type="com.greenwich.holiday.model.User" />
+        <variable name="role" type="com.greenwich.holiday.model.Role" />
+        <variable name="dept" type="com.greenwich.holiday.model.Department" />
+    </data>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DashboardActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|snap">
+
+            <LinearLayout
+                android:id="@+id/profile_backdrop"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:background="@color/blue_dark"
+                android:paddingBottom="27dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="18dp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp" />
+
+                    <TextView
+                        android:id="@+id/logout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/log_out"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:drawablePadding="15dp"
+                        android:gravity="end"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/profile_image"
+                        android:layout_alignTop="@id/profile_image"
+                        app:drawableEndCompat="@drawable/ic_logout"
+                        android:layout_marginEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_below="@id/profile_image"
+                        android:text='@{user.name}'
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:id="@+id/staff_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_centerHorizontal="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:text='@{user.email}'/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:ignore="UseCompoundDrawables">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/left_curve"
+                android:layout_marginEnd="1dp"
+                android:padding="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_leaves"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.valueOf(user.total_leaves)}'
+                    android:textAllCaps="true"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/right_curve"
+                android:layout_marginStart="1dp"
+                android:padding="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remaining_leave"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{String.valueOf(user.remaining_leaves)}'
+                    android:textSize="22sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_30"
+                android:paddingStart="@dimen/margin_30"
+                android:paddingEnd="@dimen/margin_30">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tit1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/username"
+                        android:textStyle="bold"
+                        android:drawablePadding="10dp"
+                        app:drawableStartCompat="@drawable/ic_badge" />
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tit1"
+                        android:text='@{user.username}'
+                        android:layout_marginStart="15dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textStyle="bold"
+                        android:drawablePadding="10dp"
+                        app:drawableStartCompat="@drawable/ic_email" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tit2"
+                        android:text='@{user.email}'
+                        android:layout_marginStart="15dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tit3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/role"
+                        android:textStyle="bold"
+                        android:drawablePadding="10dp"
+                        app:drawableStartCompat="@drawable/ic_role" />
+
+                    <TextView
+                        android:id="@+id/role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tit3"
+                        android:text='@{role.name}'
+                        android:layout_marginStart="15dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tit4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dept"
+                        android:textStyle="bold"
+                        android:drawablePadding="10dp"
+                        app:drawableStartCompat="@drawable/ic_department" />
+
+                    <TextView
+                        android:id="@+id/dept"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tit4"
+                        android:text='@{dept.name}'
+                        android:layout_marginStart="15dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tit5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_joined"
+                        android:textStyle="bold"
+                        android:drawablePadding="10dp"
+                        app:drawableStartCompat="@drawable/ic_date" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tit5"
+                        android:text='@{user.date_of_joining}'
+                        android:layout_marginStart="15dp"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/request_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonFillAppearance_green"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cornerRadius="37.5dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/req_history"
+            android:drawableLeft="@drawable/ic_history"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonFillAppearance"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:cornerRadius="37.5dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="@string/book_holiday"
+            android:drawableLeft="@drawable/ic_calendar"/>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">HolidayApp</string>
+    <string name="load">Loading…</string>
+    <string name="conn_error">Error Connecting, Please Check Your Internet Connection</string>
+    <string name="parse_error">Oops! Could Not Process Your Request, Please Try Again</string>
+    <string name="req_error">Your Request Has Been Canceled..</string>
+    <string name="login">Login</string>
+    <string name="your_id">Your ID</string>
+    <string name="password">Password</string>
+    <string name="log_out">Logout</string>
+    <string name="req_history">REQUEST HISTORY</string>
+    <string name="book_holiday">BOOK YOUR HOLIDAY</string>
+    <string name="username">Username:</string>
+    <string name="email">E-mail:</string>
+    <string name="role">Role:</string>
+    <string name="dept">Department:</string>
+    <string name="date_joined">Date of joining:</string>
+    <string name="cancel">Cancel</string>
+    <string name="total_leaves">Total Leaves</string>
+    <string name="remaining_leave">Remaining Leaves</string>
+    <string name="book">Apply</string>
+</resources>
