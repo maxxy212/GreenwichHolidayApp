@@ -24,4 +24,5 @@ public class User extends RealmObject {
     public String email_verified_at;
     public String created_at;
     public String updated_at;
+    public String access_token;
 }

@@ -13,5 +13,14 @@
         android:layout_marginTop="@dimen/margin_30"
         android:layout_marginBottom="@dimen/margin_30"/>
 
+    <TextView
+        android:id="@+id/no_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

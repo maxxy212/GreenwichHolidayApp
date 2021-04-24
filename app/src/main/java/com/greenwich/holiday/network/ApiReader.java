@@ -104,6 +104,11 @@ public class ApiReader {
         return code == OK_RESPONSE || code == CREATED_RESPONSE || code == DUPLICATE_RESPONSE;
     }
 
+    public boolean isNotCreated(){
+        int NOT_CREATED = 304;
+        return code == NOT_CREATED;
+    }
+
     public boolean isFailed(){
         int VALIDATION_ERROR = 400;
         return code == VALIDATION_ERROR;

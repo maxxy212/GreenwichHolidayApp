@@ -7,8 +7,11 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.interfaces.OkHttpResponseAndJSONArrayRequestListener;
 import com.androidnetworking.interfaces.OkHttpResponseAndJSONObjectRequestListener;
 import com.greenwich.holiday.BuildConfig;
+import com.greenwich.holiday.model.User;
 
 import org.json.JSONObject;
+
+import io.realm.Realm;
 
 /**
  * Package com.greenwich.holiday.network in
@@ -59,6 +62,19 @@ public class Networking {
                 .getAsOkHttpResponseAndJSONObject(listener);
     }
 
+    public static void getDataArrayWithAuthorization(String endpoint,
+                                                     OkHttpResponseAndJSONArrayRequestListener listener) {
+        Log.d(TAG, "getDataWithAuthorization: " + API_ENDPOINT + endpoint);
+        Log.d(TAG, "getDataWithAuthorization: " + getToken());
+        AndroidNetworking.get(API_ENDPOINT + endpoint)
+                .setTag(endpoint)
+                .setPriority(Priority.MEDIUM)
+                .addHeaders("Authorization", "Bearer " + getToken())
+                .addHeaders("Content-Type", "application/json")
+                .build()
+                .getAsOkHttpResponseAndJSONArray(listener);
+    }
+
     public static void postData(String endpoint,
                                 JSONObject jsonObject,
                                 OkHttpResponseAndJSONObjectRequestListener listener) {
@@ -75,52 +91,15 @@ public class Networking {
 
     public static void postDataWithAuthorization(String endpoint,
                                                  JSONObject jsonObject,
-                                                 boolean accessToken,
                                                  OkHttpResponseAndJSONObjectRequestListener listener) {
-        String tok;
-        if (!accessToken){
-            tok = getRefreshToken();
-        }else{
-            tok = getToken();
-        }
         Log.d(TAG, "postDataWithAuthorization: " + API_ENDPOINT + endpoint);
-        Log.d(TAG, "postDataWithAuthorization: " + tok);
+        Log.d(TAG, "postDataWithAuthorization: " + getToken());
         AndroidNetworking.post(API_ENDPOINT + endpoint)
                 .addJSONObjectBody(jsonObject)
                 .setTag(endpoint)
                 .setPriority(Priority.MEDIUM)
-                .addHeaders("Authorization", "Bearer " + tok)
-                .addHeaders("Content-Type", "application/json")
-                .build()
-                .getAsOkHttpResponseAndJSONObject(listener);
-    }
-
-    public static void putData(String endpoint,
-                               JSONObject jsonObject,
-                               OkHttpResponseAndJSONObjectRequestListener listener)
-    {
-        Log.d(TAG, "putData: "+ API_ENDPOINT + endpoint);
-        Log.d(TAG, "putData: " + getToken());
-        AndroidNetworking.put(API_ENDPOINT + endpoint)
-                .addJSONObjectBody(jsonObject)
-                .setTag(endpoint)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("Content-Type", "application/json")
-                .build()
-                .getAsOkHttpResponseAndJSONObject(listener);
-    }
-
-    public static void putDataWithAuthorization(String endpoint,
-                                                JSONObject jsonObject,
-                                                OkHttpResponseAndJSONObjectRequestListener listener)
-    {
-        Log.d(TAG, "putData: "+ API_ENDPOINT + endpoint);
-        AndroidNetworking.put(API_ENDPOINT + endpoint)
-                .addJSONObjectBody(jsonObject)
-                .setTag(endpoint)
-                .setPriority(Priority.MEDIUM)
-                .addHeaders("Content-Type", "application/json")
                 .addHeaders("Authorization", "Bearer " + getToken())
+                .addHeaders("Content-Type", "application/json")
                 .build()
                 .getAsOkHttpResponseAndJSONObject(listener);
     }
@@ -140,30 +119,16 @@ public class Networking {
 
 
     private static String getToken(){
-//        try (Realm _realm = Realm.getDefaultInstance()) {
-//            User user = _realm.where(User.class).findFirst();
-//            if (user != null) {
-//                return user.access_token;
-//            }
-//        } catch (Exception e) {
-//            Log.d(TAG, "getToken: " + e.getMessage());
-//            return "";
-//        }
-
+        try (Realm _realm = Realm.getDefaultInstance()) {
+            User user = _realm.where(User.class).findFirst();
+            if (user != null) {
+                return user.access_token;
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "getToken: " + e.getMessage());
+            return "";
+        }
         return "";
     }
 
-    private static String getRefreshToken(){
-//        try (Realm _realm = Realm.getDefaultInstance()) {
-//            User user = _realm.where(User.class).findFirst();
-//            if (user != null) {
-//                return user.refresh_token;
-//            }
-//        } catch (Exception e) {
-//            Log.d(TAG, "getToken: " + e.getMessage());
-//            return "";
-//        }
-
-        return "";
-    }
 }

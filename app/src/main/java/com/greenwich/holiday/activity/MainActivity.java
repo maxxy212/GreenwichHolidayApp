@@ -9,6 +9,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -53,5 +54,9 @@ public class MainActivity extends AppCompatActivity {
             finishAffinity();
         }
 
+    }
+
+    public static void start(Context context){
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 }

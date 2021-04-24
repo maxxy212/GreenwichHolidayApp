@@ -2,23 +2,59 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable name="holiday" type="com.greenwich.holiday.model.Holiday" />
+        <variable name="date" type="String" />
+    </data>
+
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="4dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:layout_margin="8dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@color/light_orange">
 
         <LinearLayout
             android:id="@+id/info"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/holiday_book_details"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{String.format("%s%s - %s", @string/period, holiday.start_date, holiday.end_date)}'/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text='@{String.format("%s%s", @string/date_of_request, date)}'
+                android:textColor="@color/burnt_orange"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="end"
+            android:text='@{holiday.status == 1 ? "Accepted" : "Rejected"}'
+            android:layout_toEndOf="@+id/info"
+            android:textColor='@{holiday.status == 1 ? @color/green : @color/color_accent_darker}'/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

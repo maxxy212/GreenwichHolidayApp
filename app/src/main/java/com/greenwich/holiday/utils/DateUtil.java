@@ -1,10 +1,16 @@
 package com.greenwich.holiday.utils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
+import dagger.hilt.android.scopes.ActivityScoped;
 
 /**
  * Package com.greenwich.holiday.utils in
@@ -13,19 +19,24 @@ import java.util.Locale;
  * <p>
  * Created by Maxwell on 4/20/21
  */
+@ActivityScoped
 public class DateUtil {
-    //private static final String TAG = DateUtil.class.getSimpleName();
+
+    private final Context context;
+
+    @Inject
+    public DateUtil(@ApplicationContext Context context){
+        this.context = context;
+    }
+
     @SuppressLint("ConstantLocale")
     private static final SimpleDateFormat dateformat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
     @SuppressLint("ConstantLocale")
-    private static final SimpleDateFormat sqlformat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-    public static SimpleDateFormat picFormat = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+    public final SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @SuppressLint("ConstantLocale")
-    public static final SimpleDateFormat referencedateformat = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
-    @SuppressLint("ConstantLocale")
-    public static final SimpleDateFormat fulldateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    public final SimpleDateFormat fulldateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
-    public static String formatDate(Date date , SimpleDateFormat dateformat){
+    public String formatDate(Date date , SimpleDateFormat dateformat){
         if(dateformat == null){
             dateformat = DateUtil.dateformat;
         }

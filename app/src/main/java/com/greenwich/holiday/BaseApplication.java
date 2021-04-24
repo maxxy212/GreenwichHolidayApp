@@ -30,5 +30,6 @@ public class BaseApplication extends MultiDexApplication {
         Realm.setDefaultConfiguration(configuration);
 
         AndroidNetworking.initialize(this);
+        //304 for not created
     }
 }

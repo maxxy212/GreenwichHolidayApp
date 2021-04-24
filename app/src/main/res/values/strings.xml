@@ -19,4 +19,8 @@
     <string name="total_leaves">Total Leaves</string>
     <string name="remaining_leave">Remaining Leaves</string>
     <string name="book">Apply</string>
+    <string name="holiday_book_details">Holiday booking details</string>
+    <string name="period">Period: </string>
+    <string name="date_of_request">Date of request: </string>
+    <string name="no_data">No History Data</string>
 </resources>
