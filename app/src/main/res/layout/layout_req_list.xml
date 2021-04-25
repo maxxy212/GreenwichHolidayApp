@@ -50,11 +50,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:gravity="end"
+            android:layout_marginTop="8dp"
             android:text='@{holiday.status == 1 ? "Accepted" : "Rejected"}'
             android:layout_toEndOf="@+id/info"
             android:textColor='@{holiday.status == 1 ? @color/green : @color/color_accent_darker}'/>
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="end"
+            android:layout_below="@+id/status"
+            android:text="Cancel"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/info"
+            android:textColor="@color/colorAccent"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

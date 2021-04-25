@@ -21,4 +21,5 @@
     <color name="blue_dark">#183652</color>
     <color name="green">#47B80B</color>
     <color name="light_orange">#FBF4EB</color>
+    <color name="disable_color">#ABABAB</color>
 </resources>

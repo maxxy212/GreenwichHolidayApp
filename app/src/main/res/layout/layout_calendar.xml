@@ -11,7 +11,7 @@
         android:id="@+id/calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:disable_date_color="#ABABAB"
+        custom:disable_date_color="@color/disable_date_color"
         custom:header_bg="@drawable/calendar_header"
         custom:range_color="@color/colorAccent"
         custom:selected_date_circle_color="@color/selected_date_circle_color"

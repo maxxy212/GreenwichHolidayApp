@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,7 +137,8 @@ public class DashboardActivity extends AppCompatActivity {
         LayoutHistoryBinding bind = LayoutHistoryBinding.inflate(LayoutInflater.from(this), (ViewGroup) binding.getRoot(), false);
         d.setContentView(bind.getRoot());
 
-        RealmResults<Holiday> data = realm.where(Holiday.class).findAll();
+        User user = realm.where(User.class).findFirst();
+        RealmResults<Holiday> data = realm.where(Holiday.class).equalTo("user_id", Integer.valueOf(user.id)).findAll();
         if (data == null || data.isEmpty()){
             bind.noData.setVisibility(View.VISIBLE);
         }else {
@@ -183,7 +185,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         bind.cancel.setOnClickListener(v -> d.dismiss());
         bind.book.setOnClickListener(v -> {
-            bookHoliday();
+            bookHoliday(d);
         });
 
         d.show();
@@ -194,7 +196,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    private void bookHoliday(){
+    private void bookHoliday(Dialog d){
         JSONObject object = new JSONObject();
         try {
             object.put("start_date", dateUtil.formatDate(start_date, dateUtil.sqlformat));
@@ -214,6 +216,8 @@ public class DashboardActivity extends AppCompatActivity {
             public void success(Object data) {
                 super.success(data);
                 ui.showOkayDialog("Decision made", String.valueOf(data), false);
+                HolidayDataService.startActionRefresh(DashboardActivity.this, new Intent());
+                d.dismiss();
             }
 
             @Override

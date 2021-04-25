@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#FFFFFF</color>
-    <color name="color_primary_darker">#FFFFFF</color>
+    <color name="color_primary">#040202</color>
+    <color name="color_primary_darker">#070404</color>
     <color name="color_accent">#FF0202</color>
     <color name="color_accent_darker">#E40505</color>
-    <color name="color_secondary">#FFFFFF</color>
+    <color name="color_secondary">#050303</color>
     <color name="color_background">#EEEDED</color>
-    <color name="color_light_text">#848484</color>
-    <color name="color_text">#000000</color>
-    <color name="black">#FF000000</color>
-    <color name="bg">#FFFFFF</color>
-    <color name="color_on">#FFFFFF</color>
-    <color name="color_on_secondary">#000000</color>
+    <color name="color_light_text">#DDDCDC</color>
+    <color name="color_text">#FFFFFF</color>
+    <color name="black">#FAFAFA</color>
+    <color name="bg">#000000</color>
+    <color name="color_on">#050505</color>
+    <color name="color_on_secondary">#FFFFFF</color>
     <color name="inactive">#CCD8C7</color>
     <color name="edit_text_border">#878788</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="iron_control">#A8A7A7</color>
-    <color name="light_iron_control">#DCDBDB</color>
+    <color name="white">#050505</color>
+    <color name="iron_control">#E1DFDF</color>
+    <color name="light_iron_control">#A6A3A3</color>
     <color name="burnt_orange">#f8931d</color>
-    <color name="blue_dark">#183652</color>
+    <color name="blue_dark">#4FA9FD</color>
+    <color name="disable_color">#E8E8E8</color>
 </resources>

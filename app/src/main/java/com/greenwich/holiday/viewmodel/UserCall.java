@@ -170,9 +170,7 @@ public class UserCall {
     }
 
     public void getHolidayData(final ApiCallHandler callHandler){
-        Realm realm = Realm.getDefaultInstance();
-        User user = realm.where(User.class).findFirst();
-        Networking.getDataArrayWithAuthorization(String.format(HOLIDAY_DATA, user.id), new OkHttpResponseAndJSONArrayRequestListener() {
+        Networking.getDataArrayWithAuthorization(HOLIDAY, new OkHttpResponseAndJSONArrayRequestListener() {
             @Override
             public void onResponse(Response okHttpResponse, JSONArray response) {
                 final ApiReader apiReader = new ApiReader(okHttpResponse, response);
@@ -187,6 +185,39 @@ public class UserCall {
                     }catch (Exception e){
                         callHandler.failed("Database Error", e.getMessage());
                     }
+                }else {
+                    callHandler.failed(apiReader.getErrorTitle(), apiReader.getErrorMessage());
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                final ApiReader apiReader = new ApiReader(anError);
+                apiReader.handleError(context, anError, callHandler, TAG);
+            }
+        });
+    }
+
+    public void deleteData(int id, final ApiCallHandler callHandler){
+
+        Networking.deleteData(String.format(HOLIDAY_DATA, id), new OkHttpResponseAndJSONObjectRequestListener() {
+            @Override
+            public void onResponse(Response okHttpResponse, JSONObject response) {
+                final ApiReader apiReader = new ApiReader(okHttpResponse, response);
+                Log.d(TAG, "onResponse: "+apiReader.toString());
+                if (apiReader.isSuccess()){
+                    try(Realm realm = Realm.getDefaultInstance()) {
+                        realm.executeTransaction(realm1 -> {
+                            Log.d(TAG, "writing: "+apiReader.toString());
+                            realm1.where(Holiday.class).equalTo("id", id).findFirst().deleteFromRealm();
+                            callHandler.success(apiReader.getData().optString("message"));
+                            HolidayDataService.startActionRefresh(context, new Intent());
+                        });
+                    }catch (Exception e){
+                        callHandler.failed("Database Error", e.getMessage());
+                    }
+                }else if (apiReader.isNotCreated()){
+                    callHandler.failed("Application Unsuccessful", apiReader.getData().optString("message"));
                 }else {
                     callHandler.failed(apiReader.getErrorTitle(), apiReader.getErrorMessage());
                 }

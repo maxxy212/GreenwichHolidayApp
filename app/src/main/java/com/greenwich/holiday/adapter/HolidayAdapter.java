@@ -1,9 +1,11 @@
 package com.greenwich.holiday.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.greenwich.holiday.BR;
 import com.greenwich.holiday.R;
 import com.greenwich.holiday.model.Holiday;
+import com.greenwich.holiday.network.ApiCallHandler;
 import com.greenwich.holiday.utils.DateUtil;
+import com.greenwich.holiday.utils.UI;
+import com.greenwich.holiday.viewmodel.UserCall;
 
 import javax.inject.Inject;
 
@@ -32,9 +37,10 @@ import io.realm.RealmRecyclerViewAdapter;
 public class HolidayAdapter extends RealmRecyclerViewAdapter<Holiday, HolidayAdapter.HolidayItemHolder> {
 
     private DateUtil dateUtil;
-    private Context context;
+    private Activity context;
+    private UI ui;
 
-    public HolidayAdapter(@Nullable OrderedRealmCollection<Holiday> data, Context context) {
+    public HolidayAdapter(@Nullable OrderedRealmCollection<Holiday> data, Activity context) {
         super(data, true, true);
         this.context = context;
     }
@@ -66,6 +72,33 @@ public class HolidayAdapter extends RealmRecyclerViewAdapter<Holiday, HolidayAda
             dataBinding.setVariable(BR.holiday, holiday);
             dateUtil = new DateUtil(context);
             dataBinding.setVariable(BR.date, dateUtil.formatDate(holiday.created_at, null));
+            View view = dataBinding.getRoot();
+            TextView delete = view.findViewById(R.id.delete);
+
+            ui = new UI(context);
+
+            delete.setOnClickListener(v -> {
+                ui.showNonCloseableProgress(null);
+                UserCall userCall = new UserCall(context);
+                userCall.deleteData(holiday.id, new ApiCallHandler() {
+                    @Override
+                    protected void done() {
+                        ui.dismissProgress();
+                    }
+
+                    @Override
+                    public void success(Object data) {
+                        super.success(data);
+                        ui.showOkayDialog("Decision made", String.valueOf(data), false);
+                    }
+
+                    @Override
+                    public void failed(String title, String reason) {
+                        super.failed(title, reason);
+                        ui.showErrorDialog(title, reason);
+                    }
+                });
+            });
         }
     }
 }
