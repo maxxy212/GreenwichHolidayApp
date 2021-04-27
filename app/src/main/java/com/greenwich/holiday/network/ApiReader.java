@@ -88,7 +88,7 @@ public class ApiReader {
             case ApiReader.connect_error:
                 return context.getString(R.string.conn_error);
             case ApiReader.parse_error:
-                return context.getString(R.string.parse_error);
+                return "Cannot complete this action on your leave application";
             case ApiReader.request_error:
                 return context.getString(R.string.req_error);
             default:
@@ -174,7 +174,7 @@ public class ApiReader {
             callHandler.failed(anError.getResponse().message(), message.toString());
         }else {
             String error = getNetworkErrorMsg(context);
-            callHandler.failed("Network Error", error);
+            callHandler.failed(anError.getErrorDetail().equals(ApiReader.parse_error) ? "Cannot Apply" : "Network Error", error);
         }
     }
 }

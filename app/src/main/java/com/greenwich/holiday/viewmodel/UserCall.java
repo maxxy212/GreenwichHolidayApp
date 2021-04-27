@@ -146,27 +146,44 @@ public class UserCall {
     }
 
     public void createHoliday(JSONObject jsonObject, final ApiCallHandler callHandler){
-        Networking.postDataWithAuthorization(HOLIDAY, jsonObject, new OkHttpResponseAndJSONObjectRequestListener() {
-            @Override
-            public void onResponse(Response okHttpResponse, JSONObject response) {
-                final ApiReader apiReader = new ApiReader(okHttpResponse, response);
-                Log.d(TAG, "onResponse: "+apiReader.toString());
-                if (apiReader.isSuccess()){
-                    callHandler.success(apiReader.getData().optString("message"));
-                    HolidayDataService.startActionRefresh(context, new Intent());
-                }else if (apiReader.isNotCreated()){
-                    callHandler.failed("Application Unsuccessful", apiReader.getData().optString("message"));
-                }else {
-                    callHandler.failed(apiReader.getErrorTitle(), apiReader.getErrorMessage());
-                }
-            }
+        boolean isExist = false;
+        try(Realm realm = Realm.getDefaultInstance()) {
+           User user = realm.where(User.class).findFirst();
+           Holiday holiday = realm.where(Holiday.class).equalTo("user_id", Integer.valueOf(user.id)).findFirst();
+           if (holiday != null){
+               isExist = true;
+           }
+        }catch (Exception e){
+            Log.d(TAG, "createHoliday: "+e.getMessage());
+        }
 
-            @Override
-            public void onError(ANError anError) {
-                final ApiReader apiReader = new ApiReader(anError);
-                apiReader.handleError(context, anError, callHandler, TAG);
-            }
-        });
+        if (isExist){
+            callHandler.failed("Application Unsuccessful", "You already have a current leave application");
+        }else {
+
+            Networking.postDataWithAuthorization(HOLIDAY, jsonObject, new OkHttpResponseAndJSONObjectRequestListener() {
+                @Override
+                public void onResponse(Response okHttpResponse, JSONObject response) {
+                    final ApiReader apiReader = new ApiReader(okHttpResponse, response);
+                    Log.d(TAG, "onResponse: "+apiReader.toString());
+                    if (apiReader.isSuccess()){
+                        callHandler.success(apiReader.getData().optString("message"));
+                        HolidayDataService.startActionRefresh(context, new Intent());
+                    }else if (apiReader.isNotCreated()){
+                        callHandler.failed("Application Unsuccessful", apiReader.getData().optString("message"));
+                    }else {
+                        callHandler.failed(apiReader.getErrorTitle(), apiReader.getErrorMessage());
+                    }
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    final ApiReader apiReader = new ApiReader(anError);
+                    apiReader.handleError(context, anError, callHandler, TAG);
+                }
+            });
+
+        }
     }
 
     public void getHolidayData(final ApiCallHandler callHandler){

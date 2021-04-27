@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;

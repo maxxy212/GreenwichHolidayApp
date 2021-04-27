@@ -109,6 +109,7 @@ public class UI {
     }
 
     public void forceHideKeyboard(View view){
+
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
